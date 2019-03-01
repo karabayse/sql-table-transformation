@@ -6,6 +6,9 @@ LIMIT 10;
 
 
 -- Non-Correlated Subqueries
+-- A non-correlated subquery is a subquery that can be run independently of the
+-- outer query and can be used to complete a multi-step transformation
+
 -- First create an inner query, or subquery
 SELECT code
 FROM airports
@@ -15,6 +18,13 @@ WHERE elevation > 2000;
 SELECT *
 FROM flights
 WHERE origin in (
-    SELECT code 
+    SELECT code
     FROM airports
     WHERE elevation > 2000);
+
+SELECT *
+FROM flights
+WHERE origin in (
+    SELECT code
+    FROM airports
+    WHERE faa_region = 'ASO');
