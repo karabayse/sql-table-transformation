@@ -22,9 +22,25 @@ WHERE origin in (
     FROM airports
     WHERE elevation > 2000);
 
+
 SELECT *
 FROM flights
 WHERE origin in (
     SELECT code
     FROM airports
     WHERE faa_region = 'ASO');
+
+
+SELECT a.dep_month,
+        a.dep_day_of_week,
+        AVG(a.flight_count) AS average_flights
+  FROM (
+        SELECT dep_month,
+              dep_day_of_week,
+                dep_date,
+                COUNT(*) AS flight_count
+          FROM flights
+          GROUP BY 1,2,3
+        ) a
+  GROUP BY 1,2
+  ORDER BY 1,2;
